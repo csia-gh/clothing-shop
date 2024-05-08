@@ -1,4 +1,6 @@
-.checkout-item-container {
+import styled from 'styled-components';
+
+export const CheckoutItemContainer = styled.div`
   width: 100%;
   display: flex;
   min-height: 100px;
@@ -51,4 +53,4 @@
       opacity: 1;
     }
   }
-}
+`;
