@@ -22,8 +22,19 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
+
       const pickedUser =
-        user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+        user &&
+        (({ accessToken, email, providerData: [{ displayName }] }) => ({
+          accessToken,
+          email,
+          displayName,
+        }))(user);
+
+      if (pickedUser && !pickedUser.displayName) {
+        return window.location.reload(true);
+      }
+
       dispatch(setCurrentUser(pickedUser));
     });
 

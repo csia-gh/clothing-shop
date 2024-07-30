@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -94,10 +95,20 @@ export const createUserDocumentFromAuth = async (
   return userSnapshot;
 };
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
-  if (!email || !password) return;
+export const createAuthUserWithEmailAndPassword = async (
+  email,
+  password,
+  displayName
+) => {
+  if (!email || !password || !displayName) return;
 
-  return await createUserWithEmailAndPassword(auth, email, password);
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+  await updateProfile(user, {
+    displayName,
+  });
+
+  return user;
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
